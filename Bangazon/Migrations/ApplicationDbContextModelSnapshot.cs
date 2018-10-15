@@ -79,7 +79,7 @@ namespace Bangazon.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "c7ad5097-f85a-4db2-8c7b-aa2341fab612", AccessFailedCount = 0, ConcurrencyStamp = "0ca1ee64-83b9-4819-9db5-9b3ef46e4473", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEP23NJVIT6ay+9nn4+z1Fs2moT7oshXGQwRX3TYeeIkkfZPkZHJFmzk6QKDzR+1j7g==", PhoneNumberConfirmed = false, SecurityStamp = "eea7cd19-62c4-45ce-b2ec-b5b8f0f4c62c", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" }
+                        new { Id = "4b9a6614-987d-4a98-b843-ac6bb4729a9c", AccessFailedCount = 0, ConcurrencyStamp = "2e5ada28-ac25-47e8-92d9-d2bd02438670", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAENDIyfh8RFilqIZlbmvUygyaE/eHOaENwNcZTKBHg6df0tXq/sfw4PX9Zyz+27piQA==", PhoneNumberConfirmed = false, SecurityStamp = "b8894bde-c3b2-4159-965c-2b1e7beb74ba", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" }
                     );
                 });
 
@@ -155,8 +155,8 @@ namespace Bangazon.Migrations
                     b.ToTable("PaymentType");
 
                     b.HasData(
-                        new { PaymentTypeId = 1, AccountNumber = "86753095551212", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Express", UserId = "c7ad5097-f85a-4db2-8c7b-aa2341fab612" },
-                        new { PaymentTypeId = 2, AccountNumber = "4102948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "c7ad5097-f85a-4db2-8c7b-aa2341fab612" }
+                        new { PaymentTypeId = 1, AccountNumber = "86753095551212", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Express", UserId = "4b9a6614-987d-4a98-b843-ac6bb4729a9c" },
+                        new { PaymentTypeId = 2, AccountNumber = "4102948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "4b9a6614-987d-4a98-b843-ac6bb4729a9c" }
                     );
                 });
 

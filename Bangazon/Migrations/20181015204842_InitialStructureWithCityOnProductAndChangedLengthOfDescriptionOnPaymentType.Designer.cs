@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181015191246_InitialStructurePlusAddCityToProductAndChangeLengthOfDescriptionOnPaymentType")]
-    partial class InitialStructurePlusAddCityToProductAndChangeLengthOfDescriptionOnPaymentType
+    [Migration("20181015204842_InitialStructureWithCityOnProductAndChangedLengthOfDescriptionOnPaymentType")]
+    partial class InitialStructureWithCityOnProductAndChangedLengthOfDescriptionOnPaymentType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,7 +81,7 @@ namespace Bangazon.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "2ae83db7-ee9e-4e9f-9a5d-15e15f7b2075", AccessFailedCount = 0, ConcurrencyStamp = "f3c84b69-74c5-4a1c-9857-179f5ecdcaa2", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEOtP2cc19ZQOfWPmktNtpFZH7ZD+iErq5OFHRIF3A4sUDW6dj6Nz39MLtExfs7GmHQ==", PhoneNumberConfirmed = false, SecurityStamp = "fc54531d-4530-490a-bcf9-0b44a3ff86fe", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" }
+                        new { Id = "4b9a6614-987d-4a98-b843-ac6bb4729a9c", AccessFailedCount = 0, ConcurrencyStamp = "2e5ada28-ac25-47e8-92d9-d2bd02438670", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAENDIyfh8RFilqIZlbmvUygyaE/eHOaENwNcZTKBHg6df0tXq/sfw4PX9Zyz+27piQA==", PhoneNumberConfirmed = false, SecurityStamp = "b8894bde-c3b2-4159-965c-2b1e7beb74ba", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" }
                     );
                 });
 
@@ -157,8 +157,8 @@ namespace Bangazon.Migrations
                     b.ToTable("PaymentType");
 
                     b.HasData(
-                        new { PaymentTypeId = 1, AccountNumber = "86753095551212", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Express", UserId = "2ae83db7-ee9e-4e9f-9a5d-15e15f7b2075" },
-                        new { PaymentTypeId = 2, AccountNumber = "4102948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "2ae83db7-ee9e-4e9f-9a5d-15e15f7b2075" }
+                        new { PaymentTypeId = 1, AccountNumber = "86753095551212", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Express", UserId = "4b9a6614-987d-4a98-b843-ac6bb4729a9c" },
+                        new { PaymentTypeId = 2, AccountNumber = "4102948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "4b9a6614-987d-4a98-b843-ac6bb4729a9c" }
                     );
                 });
 
@@ -168,8 +168,7 @@ namespace Bangazon.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City")
-                        .IsRequired();
+                    b.Property<string>("City");
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAddOrUpdate()
