@@ -17,7 +17,7 @@ namespace Bangazon.Models
     public DateTime DateCreated { get; set; }
 
     [Required]
-    [StringLength(12)]
+    [StringLength(25)]
     public string Description { get; set; }
 
     [Required]
