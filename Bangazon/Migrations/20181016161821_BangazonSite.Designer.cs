@@ -3,20 +3,23 @@ using System;
 using Bangazon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181015155244_BangazonTables")]
-    partial class BangazonTables
+    [Migration("20181016161821_BangazonSite")]
+    partial class BangazonSite
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932");
+                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Bangazon.Models.ApplicationUser", b =>
                 {
@@ -72,19 +75,22 @@ namespace Bangazon.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "c50b3845-97e4-4a83-aacf-cb7b1a7769f2", AccessFailedCount = 0, ConcurrencyStamp = "ef32b15e-eaba-4372-8efe-8a9dda894a95", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEMHvnfCYq1Ewznt4xN6bUg85242zu9IEh9N+LG4dVyFCwj0Xc6BTdHreFTv16Ln67g==", PhoneNumberConfirmed = false, SecurityStamp = "57fa0429-6071-44a7-9376-bbcb087d354c", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" }
+                        new { Id = "448873f9-e50e-438e-9d89-7873c3caef86", AccessFailedCount = 0, ConcurrencyStamp = "2edef847-c36e-4e50-86f6-89e31d477c5a", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEI6z5zX7hRYmtqU7olcIzScuixnoAVtUNb3FgwFXX3hD+5LQSk8rfyptaM485oZKKw==", PhoneNumberConfirmed = false, SecurityStamp = "0ec7a5dc-fbe5-4452-9d71-00302845d18d", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" },
+                        new { Id = "805a0d7f-d3c4-4a73-894a-3a90f4de4d58", AccessFailedCount = 0, ConcurrencyStamp = "19aef599-b90b-473a-829c-caa3c78fc18b", Email = "elane@seinfeld.net", EmailConfirmed = true, FirstName = "Jenn", LastName = "TheDestroyer", LockoutEnabled = false, NormalizedEmail = "ELANE@SEINFELD.NET", NormalizedUserName = "JENN@JENNHATESME.COM", PasswordHash = "AQAAAAEAACcQAAAAEGGx6rlEIcCDVy4sW1Gtb+qX0fMj4viWgt3jLj8GKf/3W/Vmgduk39cf2TolC57c/g==", PhoneNumberConfirmed = false, SecurityStamp = "8cadd712-c33b-45b8-9672-5b5390e362c8", StreetAddress = "1516 Elm Run Ct", TwoFactorEnabled = false, UserName = "jenn@jennhatesme.com" }
                     );
                 });
 
             modelBuilder.Entity("Bangazon.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("DateCompleted");
 
@@ -94,7 +100,8 @@ namespace Bangazon.Migrations
 
                     b.Property<int?>("PaymentTypeId");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("OrderId");
 
@@ -108,7 +115,8 @@ namespace Bangazon.Migrations
             modelBuilder.Entity("Bangazon.Models.OrderProduct", b =>
                 {
                     b.Property<int>("OrderProductId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("OrderId");
 
@@ -126,7 +134,8 @@ namespace Bangazon.Migrations
             modelBuilder.Entity("Bangazon.Models.PaymentType", b =>
                 {
                     b.Property<int>("PaymentTypeId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AccountNumber")
                         .IsRequired()
@@ -138,7 +147,7 @@ namespace Bangazon.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(12);
+                        .HasMaxLength(25);
 
                     b.Property<string>("UserId")
                         .IsRequired();
@@ -150,15 +159,19 @@ namespace Bangazon.Migrations
                     b.ToTable("PaymentType");
 
                     b.HasData(
-                        new { PaymentTypeId = 1, AccountNumber = "86753095551212", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Express", UserId = "c50b3845-97e4-4a83-aacf-cb7b1a7769f2" },
-                        new { PaymentTypeId = 2, AccountNumber = "4102948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "c50b3845-97e4-4a83-aacf-cb7b1a7769f2" }
+                        new { PaymentTypeId = 1, AccountNumber = "86753095551212", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Express", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { PaymentTypeId = 2, AccountNumber = "4102948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { PaymentTypeId = 3, AccountNumber = "9992948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "805a0d7f-d3c4-4a73-894a-3a90f4de4d58" }
                     );
                 });
 
             modelBuilder.Entity("Bangazon.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City");
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAddOrUpdate()
@@ -188,12 +201,24 @@ namespace Bangazon.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Product");
+
+                    b.HasData(
+                        new { ProductId = 1, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Banana Daniels", Price = 17.01, ProductTypeId = 1, Quantity = 3, Title = "Bananiels", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 2, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "It dries the hairs or else it gets the hose again", Price = 25.0, ProductTypeId = 2, Quantity = 123, Title = "Hair-O-Matic 9000", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 3, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Provides +1 to poppable collars", Price = 30.0, ProductTypeId = 3, Quantity = 754, Title = "Ralph Lauren Polo", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 4, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Plug in to the Adventure!", Price = 10.0, ProductTypeId = 4, Quantity = 5, Title = "Brave Little Toaster", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 5, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "That pizza with the cheese in the crust", Price = 14.0, ProductTypeId = 1, Quantity = 34, Title = "Stuffed Crust Digiorno", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 6, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Cool.", Price = 6000.0, ProductTypeId = 2, Quantity = 87, Title = "Automated Fidget Spinner", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 7, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "No Stripes or Polka Dots", Price = 70.0, ProductTypeId = 3, Quantity = 7, Title = "Heather Gray Hoodie", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 8, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Tear down the establishment of mars.", Price = 830.0, ProductTypeId = 4, Quantity = 10, Title = "Sledgehammer", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" }
+                    );
                 });
 
             modelBuilder.Entity("Bangazon.Models.ProductType", b =>
                 {
                     b.Property<int>("ProductTypeId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Label")
                         .IsRequired()
@@ -202,6 +227,13 @@ namespace Bangazon.Migrations
                     b.HasKey("ProductTypeId");
 
                     b.ToTable("ProductType");
+
+                    b.HasData(
+                        new { ProductTypeId = 1, Label = "Food" },
+                        new { ProductTypeId = 2, Label = "Electronics" },
+                        new { ProductTypeId = 3, Label = "Clothing" },
+                        new { ProductTypeId = 4, Label = "Homewares" }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -222,7 +254,8 @@ namespace Bangazon.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex");
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -230,7 +263,8 @@ namespace Bangazon.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -249,7 +283,8 @@ namespace Bangazon.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -323,7 +358,8 @@ namespace Bangazon.Migrations
 
                     b.HasOne("Bangazon.Models.ApplicationUser", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Bangazon.Models.OrderProduct", b =>

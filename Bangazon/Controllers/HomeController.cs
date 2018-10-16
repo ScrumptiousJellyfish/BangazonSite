@@ -12,6 +12,7 @@ namespace Bangazon.Controllers
     {
         public IActionResult Index()
         {
+
             return View();
         }
 
