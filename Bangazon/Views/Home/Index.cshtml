@@ -13,9 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
@@ -38,13 +35,15 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DateCreated)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title)
+                    @Html.ActionLink(
+                    linkText: $"{item.Title}",
+                    actionName: "Details",
+                    controllerName: "Products",
+                    routeValues: new {id = item.ProductId},
+                    htmlAttributes: null )
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
@@ -55,11 +54,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ProductType.Label)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-                </td>
+                
             </tr>
         }
     </tbody>
