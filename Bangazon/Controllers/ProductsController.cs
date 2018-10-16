@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Bangazon.Controllers
 {
@@ -14,10 +17,18 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context,
+                                  UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        // Stores private reference to Identity Framework user manager
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        // This task retrieves the currently authenticated user
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Products
         public async Task<IActionResult> Index()
@@ -46,8 +57,17 @@ namespace Bangazon.Controllers
         }
 
         // GET: Products/Create
-        public IActionResult Create()
+
+        [Authorize]
+        public async Task<IActionResult> Create()
         {
+            // Remove the user from the model validation because it is
+            // not information posted in the form
+            ModelState.Remove("product.User");
+
+            // Get the current user
+            var user = await GetCurrentUserAsync();
+
             ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             return View();
         }
@@ -59,12 +79,25 @@ namespace Bangazon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductId,DateCreated,Description,Title,Price,Quantity,ProductTypeId")] Product product)
         {
+            // Remove the user from the model validation because it is
+            // not information posted in the form
+            ModelState.Remove("User");
+            ModelState.Remove("UserId");
+            //ModelState.Remove(product.UserId);
+
+
             if (ModelState.IsValid)
             {
+                // Get the current user
+                var user = await GetCurrentUserAsync();
+
+                product.UserId = user.Id;
+
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
             return View(product);
         }
