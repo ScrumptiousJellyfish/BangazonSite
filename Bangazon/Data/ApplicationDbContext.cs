@@ -48,6 +48,7 @@ namespace Bangazon.Data {
 
             ApplicationUser user = new ApplicationUser
             {
+                Id = Guid.NewGuid().ToString(),
                 FirstName = "admin",
                 LastName = "admin",
                 StreetAddress = "123 Infinity Way",
@@ -62,6 +63,7 @@ namespace Bangazon.Data {
 
             ApplicationUser user2 = new ApplicationUser
             {
+                Id = Guid.NewGuid().ToString(),
                 FirstName = "Jenn",
                 LastName = "TheDestroyer",
                 StreetAddress = "1516 Elm Run Ct",
@@ -107,10 +109,10 @@ namespace Bangazon.Data {
                 Label = "Homewares"
             };
 
-            modelBuilder.Entity<ApplicationUser>().HasData(ProductType1);
-            modelBuilder.Entity<ApplicationUser>().HasData(ProductType2);
-            modelBuilder.Entity<ApplicationUser>().HasData(ProductType3);
-            modelBuilder.Entity<ApplicationUser>().HasData(ProductType4);
+            modelBuilder.Entity<ProductType>().HasData(ProductType1);
+            modelBuilder.Entity<ProductType>().HasData(ProductType2);
+            modelBuilder.Entity<ProductType>().HasData(ProductType3);
+            modelBuilder.Entity<ProductType>().HasData(ProductType4);
 
 
             modelBuilder.Entity<PaymentType>().HasData(
@@ -137,102 +139,14 @@ namespace Bangazon.Data {
                 }
             );
 
-            modelBuilder.Entity<Order>().HasData(
-                new Order()
-                {
-                    OrderId = 1,
-                    DateCreated = new DateTime(2018, 9, 01),
-                    DateCompleted = new DateTime(2018, 10, 01),
-                    User = user,
-                    PaymentTypeId = 1,
-                },
-                new Order()
-                {
-                    OrderId = 2,
-                    DateCreated = new DateTime(2017, 3, 01),
-                    DateCompleted = new DateTime(2018, 10, 01),
-                    User = user2,
-                    PaymentTypeId = 3,
-                },
-                new Order()
-                {
-                    OrderId = 3,
-                    DateCreated = new DateTime(2016, 9, 01),
-                    DateCompleted = new DateTime(2017, 10, 01),
-                    User = user,
-                    PaymentTypeId = 2,
-                },
-                new Order()
-                {
-                    OrderId = 4,
-                    DateCreated = new DateTime(2018, 9, 01),
-                    DateCompleted = null,
-                    User = user2,
-                    PaymentTypeId = null,
-                },
-                new Order()
-                {
-                    OrderId = 5,
-                    DateCreated = new DateTime(2018, 10, 2),
-                    DateCompleted = null,
-                    User = user,
-                    PaymentTypeId = null,
-                }
-
-
-            );
-
-            modelBuilder.Entity<OrderProduct>().HasData(
-                new OrderProduct()
-                {
-                    OrderProductId = 1,
-                    OrderId = 1,
-                    ProductId = 1
-                },
-                new OrderProduct()
-                {
-                    OrderProductId = 2,
-                    OrderId = 1,
-                    ProductId = 7
-                },
-                new OrderProduct()
-                {
-                    OrderProductId = 3,
-                    OrderId = 2,
-                    ProductId = 6
-                },
-                new OrderProduct()
-                {
-                    OrderProductId = 4,
-                    OrderId = 2,
-                    ProductId = 4
-                },
-                new OrderProduct()
-                {
-                    OrderProductId = 5,
-                    OrderId = 3,
-                    ProductId = 8
-                },
-                new OrderProduct()
-                {
-                    OrderProductId = 6,
-                    OrderId = 4,
-                    ProductId = 2
-                },
-                new OrderProduct()
-                {
-                    OrderProductId = 7,
-                    OrderId = 5,
-                    ProductId = 3
-                }
-                );
+            
             Product product1 = new Product()
             {
                 ProductId = 1,
                 Description = "Banana Daniels",
                 Title = "Bananiels",
                 Price = 17.01,
-                User = user,
+                UserId = user.Id,
                 ProductTypeId = 1,
                 Quantity = 3
             };
@@ -243,7 +157,7 @@ namespace Bangazon.Data {
                 Description = "It dries the hairs or else it gets the hose again",
                 Title = "Hair-O-Matic 9000",
                 Price = 25.00,
-                User = user,
+                UserId = user.Id,
                 ProductTypeId = 2,
                 Quantity = 123
             };
@@ -254,7 +168,7 @@ namespace Bangazon.Data {
                 Description = "Provides +1 to poppable collars",
                 Title = "Ralph Lauren Polo",
                 Price = 30.00,
-                User = user,
+                UserId = user.Id,
                 ProductTypeId = 3,
                 Quantity = 754
             };
@@ -265,7 +179,7 @@ namespace Bangazon.Data {
                 Description = "Plug in to the Adventure!",
                 Title = "Brave Little Toaster",
                 Price = 10.00,
-                User = user,
+                UserId = user.Id,
                 ProductTypeId = 4,
                 Quantity = 5
             };
@@ -276,7 +190,7 @@ namespace Bangazon.Data {
                 Description = "That pizza with the cheese in the crust",
                 Title = "Stuffed Crust Digiorno",
                 Price = 14.00,
-                User = user,
+                UserId = user.Id,
                 ProductTypeId = 1,
                 Quantity = 34
             };
@@ -287,7 +201,7 @@ namespace Bangazon.Data {
                 Description = "Cool.",
                 Title = "Automated Fidget Spinner",
                 Price = 6000.00,
-                User = user,
+                UserId = user.Id,
                 ProductTypeId = 2,
                 Quantity = 87
             };
@@ -298,7 +212,7 @@ namespace Bangazon.Data {
                 Description = "No Stripes or Polka Dots",
                 Title = "Heather Gray Hoodie",
                 Price = 70.00,
-                User = user,
+                UserId = user.Id,
                 ProductTypeId = 3,
                 Quantity = 7
             };
@@ -309,7 +223,7 @@ namespace Bangazon.Data {
                 Description = "Tear down the establishment of mars.",
                 Title = "Sledgehammer",
                 Price = 830.00,
-                User = user,
+                UserId = user.Id,
                 ProductTypeId = 4,
                 Quantity = 10
             };

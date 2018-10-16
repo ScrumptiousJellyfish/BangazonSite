@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Bangazon.Migrations
 {
-    public partial class BangazonTables : Migration
+    public partial class BangazonSite : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -176,7 +176,7 @@ namespace Bangazon.Migrations
                     PaymentTypeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
-                    Description = table.Column<string>(maxLength: 12, nullable: false),
+                    Description = table.Column<string>(maxLength: 25, nullable: false),
                     AccountNumber = table.Column<string>(maxLength: 20, nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -202,6 +202,7 @@ namespace Bangazon.Migrations
                     Title = table.Column<string>(maxLength: 55, nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
+                    City = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false),
                     ProductTypeId = table.Column<int>(nullable: false)
                 },
@@ -230,7 +231,7 @@ namespace Bangazon.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
                     DateCompleted = table.Column<DateTime>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false),
                     PaymentTypeId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -247,7 +248,7 @@ namespace Bangazon.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -279,17 +280,47 @@ namespace Bangazon.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "StreetAddress", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "bb604014-3a03-4009-bd50-f3c43b07d165", 0, "3d922fd6-544d-499c-b263-7a510cbc8225", "admin@admin.com", true, "admin", "admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEH+FpJ+03z2dr2sh6eJc89UatJ6zsBj1hbKswQ7207N1/PDT53O9CkglLXoGMhYcYQ==", null, false, "2af92116-f90a-48c3-9cb5-1b8da26940fe", "123 Infinity Way", false, "admin@admin.com" });
+                values: new object[,]
+                {
+                    { "96b678a8-438c-4c90-9642-cd300c7964fc", 0, "a7a66411-da39-418d-bc50-685795dac7eb", "admin@admin.com", true, "admin", "admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAELvHhYbtepraAL79q5+ZcP3VZ6wZ8wMpv7FufY2oBGR7dZJ70EirT0tLD+eaHQDt1w==", null, false, "66c7de1d-0c16-4af0-9fc8-6148076a670c", "123 Infinity Way", false, "admin@admin.com" },
+                    { "6a47d07d-7ed5-4985-9fbb-b0ffc0d00a49", 0, "1e62ba33-79fb-448d-ad11-efacc76d9b22", "elane@seinfeld.net", true, "Jenn", "TheDestroyer", false, null, "ELANE@SEINFELD.NET", "JENN@JENNHATESME.COM", "AQAAAAEAACcQAAAAEK+DPR7nJStpPCeB4299Yw6bQOQ3gBAxFWGZQXylbRMmdG4zYxg4jpziq0W8Cd5mnA==", null, false, "62cf340d-517d-4b35-bd6d-3479ad6d55e4", "1516 Elm Run Ct", false, "jenn@jennhatesme.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProductType",
+                columns: new[] { "ProductTypeId", "Label" },
+                values: new object[,]
+                {
+                    { 1, "Food" },
+                    { 2, "Electronics" },
+                    { 3, "Clothing" },
+                    { 4, "Homewares" }
+                });
 
             migrationBuilder.InsertData(
                 table: "PaymentType",
                 columns: new[] { "PaymentTypeId", "AccountNumber", "DateCreated", "Description", "UserId" },
-                values: new object[] { 1, "86753095551212", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "American Express", "bb604014-3a03-4009-bd50-f3c43b07d165" });
+                values: new object[,]
+                {
+                    { 1, "86753095551212", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "American Express", "96b678a8-438c-4c90-9642-cd300c7964fc" },
+                    { 2, "4102948572991", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", "96b678a8-438c-4c90-9642-cd300c7964fc" },
+                    { 3, "9992948572991", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", "6a47d07d-7ed5-4985-9fbb-b0ffc0d00a49" }
+                });
 
             migrationBuilder.InsertData(
-                table: "PaymentType",
-                columns: new[] { "PaymentTypeId", "AccountNumber", "DateCreated", "Description", "UserId" },
-                values: new object[] { 2, "4102948572991", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", "bb604014-3a03-4009-bd50-f3c43b07d165" });
+                table: "Product",
+                columns: new[] { "ProductId", "City", "DateCreated", "Description", "Price", "ProductTypeId", "Quantity", "Title", "UserId" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Banana Daniels", 17.01, 1, 3, "Bananiels", "96b678a8-438c-4c90-9642-cd300c7964fc" },
+                    { 5, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "That pizza with the cheese in the crust", 14.0, 1, 34, "Stuffed Crust Digiorno", "96b678a8-438c-4c90-9642-cd300c7964fc" },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "It dries the hairs or else it gets the hose again", 25.0, 2, 123, "Hair-O-Matic 9000", "96b678a8-438c-4c90-9642-cd300c7964fc" },
+                    { 6, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Cool.", 6000.0, 2, 87, "Automated Fidget Spinner", "96b678a8-438c-4c90-9642-cd300c7964fc" },
+                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Provides +1 to poppable collars", 30.0, 3, 754, "Ralph Lauren Polo", "96b678a8-438c-4c90-9642-cd300c7964fc" },
+                    { 7, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "No Stripes or Polka Dots", 70.0, 3, 7, "Heather Gray Hoodie", "96b678a8-438c-4c90-9642-cd300c7964fc" },
+                    { 4, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Plug in to the Adventure!", 10.0, 4, 5, "Brave Little Toaster", "96b678a8-438c-4c90-9642-cd300c7964fc" },
+                    { 8, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tear down the establishment of mars.", 830.0, 4, 10, "Sledgehammer", "96b678a8-438c-4c90-9642-cd300c7964fc" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
