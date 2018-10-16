@@ -79,8 +79,8 @@ namespace Bangazon.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "96b678a8-438c-4c90-9642-cd300c7964fc", AccessFailedCount = 0, ConcurrencyStamp = "a7a66411-da39-418d-bc50-685795dac7eb", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAELvHhYbtepraAL79q5+ZcP3VZ6wZ8wMpv7FufY2oBGR7dZJ70EirT0tLD+eaHQDt1w==", PhoneNumberConfirmed = false, SecurityStamp = "66c7de1d-0c16-4af0-9fc8-6148076a670c", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" },
-                        new { Id = "6a47d07d-7ed5-4985-9fbb-b0ffc0d00a49", AccessFailedCount = 0, ConcurrencyStamp = "1e62ba33-79fb-448d-ad11-efacc76d9b22", Email = "elane@seinfeld.net", EmailConfirmed = true, FirstName = "Jenn", LastName = "TheDestroyer", LockoutEnabled = false, NormalizedEmail = "ELANE@SEINFELD.NET", NormalizedUserName = "JENN@JENNHATESME.COM", PasswordHash = "AQAAAAEAACcQAAAAEK+DPR7nJStpPCeB4299Yw6bQOQ3gBAxFWGZQXylbRMmdG4zYxg4jpziq0W8Cd5mnA==", PhoneNumberConfirmed = false, SecurityStamp = "62cf340d-517d-4b35-bd6d-3479ad6d55e4", StreetAddress = "1516 Elm Run Ct", TwoFactorEnabled = false, UserName = "jenn@jennhatesme.com" }
+                        new { Id = "448873f9-e50e-438e-9d89-7873c3caef86", AccessFailedCount = 0, ConcurrencyStamp = "2edef847-c36e-4e50-86f6-89e31d477c5a", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEI6z5zX7hRYmtqU7olcIzScuixnoAVtUNb3FgwFXX3hD+5LQSk8rfyptaM485oZKKw==", PhoneNumberConfirmed = false, SecurityStamp = "0ec7a5dc-fbe5-4452-9d71-00302845d18d", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" },
+                        new { Id = "805a0d7f-d3c4-4a73-894a-3a90f4de4d58", AccessFailedCount = 0, ConcurrencyStamp = "19aef599-b90b-473a-829c-caa3c78fc18b", Email = "elane@seinfeld.net", EmailConfirmed = true, FirstName = "Jenn", LastName = "TheDestroyer", LockoutEnabled = false, NormalizedEmail = "ELANE@SEINFELD.NET", NormalizedUserName = "JENN@JENNHATESME.COM", PasswordHash = "AQAAAAEAACcQAAAAEGGx6rlEIcCDVy4sW1Gtb+qX0fMj4viWgt3jLj8GKf/3W/Vmgduk39cf2TolC57c/g==", PhoneNumberConfirmed = false, SecurityStamp = "8cadd712-c33b-45b8-9672-5b5390e362c8", StreetAddress = "1516 Elm Run Ct", TwoFactorEnabled = false, UserName = "jenn@jennhatesme.com" }
                     );
                 });
 
@@ -157,9 +157,9 @@ namespace Bangazon.Migrations
                     b.ToTable("PaymentType");
 
                     b.HasData(
-                        new { PaymentTypeId = 1, AccountNumber = "86753095551212", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Express", UserId = "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                        new { PaymentTypeId = 2, AccountNumber = "4102948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                        new { PaymentTypeId = 3, AccountNumber = "9992948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "6a47d07d-7ed5-4985-9fbb-b0ffc0d00a49" }
+                        new { PaymentTypeId = 1, AccountNumber = "86753095551212", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Express", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { PaymentTypeId = 2, AccountNumber = "4102948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { PaymentTypeId = 3, AccountNumber = "9992948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "805a0d7f-d3c4-4a73-894a-3a90f4de4d58" }
                     );
                 });
 
@@ -201,14 +201,14 @@ namespace Bangazon.Migrations
                     b.ToTable("Product");
 
                     b.HasData(
-                        new { ProductId = 1, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Banana Daniels", Price = 17.01, ProductTypeId = 1, Quantity = 3, Title = "Bananiels", UserId = "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                        new { ProductId = 2, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "It dries the hairs or else it gets the hose again", Price = 25.0, ProductTypeId = 2, Quantity = 123, Title = "Hair-O-Matic 9000", UserId = "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                        new { ProductId = 3, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Provides +1 to poppable collars", Price = 30.0, ProductTypeId = 3, Quantity = 754, Title = "Ralph Lauren Polo", UserId = "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                        new { ProductId = 4, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Plug in to the Adventure!", Price = 10.0, ProductTypeId = 4, Quantity = 5, Title = "Brave Little Toaster", UserId = "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                        new { ProductId = 5, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "That pizza with the cheese in the crust", Price = 14.0, ProductTypeId = 1, Quantity = 34, Title = "Stuffed Crust Digiorno", UserId = "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                        new { ProductId = 6, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Cool.", Price = 6000.0, ProductTypeId = 2, Quantity = 87, Title = "Automated Fidget Spinner", UserId = "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                        new { ProductId = 7, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "No Stripes or Polka Dots", Price = 70.0, ProductTypeId = 3, Quantity = 7, Title = "Heather Gray Hoodie", UserId = "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                        new { ProductId = 8, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Tear down the establishment of mars.", Price = 830.0, ProductTypeId = 4, Quantity = 10, Title = "Sledgehammer", UserId = "96b678a8-438c-4c90-9642-cd300c7964fc" }
+                        new { ProductId = 1, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Banana Daniels", Price = 17.01, ProductTypeId = 1, Quantity = 3, Title = "Bananiels", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 2, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "It dries the hairs or else it gets the hose again", Price = 25.0, ProductTypeId = 2, Quantity = 123, Title = "Hair-O-Matic 9000", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 3, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Provides +1 to poppable collars", Price = 30.0, ProductTypeId = 3, Quantity = 754, Title = "Ralph Lauren Polo", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 4, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Plug in to the Adventure!", Price = 10.0, ProductTypeId = 4, Quantity = 5, Title = "Brave Little Toaster", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 5, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "That pizza with the cheese in the crust", Price = 14.0, ProductTypeId = 1, Quantity = 34, Title = "Stuffed Crust Digiorno", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 6, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Cool.", Price = 6000.0, ProductTypeId = 2, Quantity = 87, Title = "Automated Fidget Spinner", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 7, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "No Stripes or Polka Dots", Price = 70.0, ProductTypeId = 3, Quantity = 7, Title = "Heather Gray Hoodie", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" },
+                        new { ProductId = 8, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Tear down the establishment of mars.", Price = 830.0, ProductTypeId = 4, Quantity = 10, Title = "Sledgehammer", UserId = "448873f9-e50e-438e-9d89-7873c3caef86" }
                     );
                 });
 

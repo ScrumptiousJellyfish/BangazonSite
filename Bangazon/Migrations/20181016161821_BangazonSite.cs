@@ -282,8 +282,8 @@ namespace Bangazon.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "StreetAddress", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "96b678a8-438c-4c90-9642-cd300c7964fc", 0, "a7a66411-da39-418d-bc50-685795dac7eb", "admin@admin.com", true, "admin", "admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAELvHhYbtepraAL79q5+ZcP3VZ6wZ8wMpv7FufY2oBGR7dZJ70EirT0tLD+eaHQDt1w==", null, false, "66c7de1d-0c16-4af0-9fc8-6148076a670c", "123 Infinity Way", false, "admin@admin.com" },
-                    { "6a47d07d-7ed5-4985-9fbb-b0ffc0d00a49", 0, "1e62ba33-79fb-448d-ad11-efacc76d9b22", "elane@seinfeld.net", true, "Jenn", "TheDestroyer", false, null, "ELANE@SEINFELD.NET", "JENN@JENNHATESME.COM", "AQAAAAEAACcQAAAAEK+DPR7nJStpPCeB4299Yw6bQOQ3gBAxFWGZQXylbRMmdG4zYxg4jpziq0W8Cd5mnA==", null, false, "62cf340d-517d-4b35-bd6d-3479ad6d55e4", "1516 Elm Run Ct", false, "jenn@jennhatesme.com" }
+                    { "448873f9-e50e-438e-9d89-7873c3caef86", 0, "2edef847-c36e-4e50-86f6-89e31d477c5a", "admin@admin.com", true, "admin", "admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEI6z5zX7hRYmtqU7olcIzScuixnoAVtUNb3FgwFXX3hD+5LQSk8rfyptaM485oZKKw==", null, false, "0ec7a5dc-fbe5-4452-9d71-00302845d18d", "123 Infinity Way", false, "admin@admin.com" },
+                    { "805a0d7f-d3c4-4a73-894a-3a90f4de4d58", 0, "19aef599-b90b-473a-829c-caa3c78fc18b", "elane@seinfeld.net", true, "Jenn", "TheDestroyer", false, null, "ELANE@SEINFELD.NET", "JENN@JENNHATESME.COM", "AQAAAAEAACcQAAAAEGGx6rlEIcCDVy4sW1Gtb+qX0fMj4viWgt3jLj8GKf/3W/Vmgduk39cf2TolC57c/g==", null, false, "8cadd712-c33b-45b8-9672-5b5390e362c8", "1516 Elm Run Ct", false, "jenn@jennhatesme.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -302,9 +302,9 @@ namespace Bangazon.Migrations
                 columns: new[] { "PaymentTypeId", "AccountNumber", "DateCreated", "Description", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "86753095551212", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "American Express", "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                    { 2, "4102948572991", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                    { 3, "9992948572991", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", "6a47d07d-7ed5-4985-9fbb-b0ffc0d00a49" }
+                    { 1, "86753095551212", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "American Express", "448873f9-e50e-438e-9d89-7873c3caef86" },
+                    { 2, "4102948572991", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", "448873f9-e50e-438e-9d89-7873c3caef86" },
+                    { 3, "9992948572991", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", "805a0d7f-d3c4-4a73-894a-3a90f4de4d58" }
                 });
 
             migrationBuilder.InsertData(
@@ -312,14 +312,14 @@ namespace Bangazon.Migrations
                 columns: new[] { "ProductId", "City", "DateCreated", "Description", "Price", "ProductTypeId", "Quantity", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Banana Daniels", 17.01, 1, 3, "Bananiels", "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                    { 5, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "That pizza with the cheese in the crust", 14.0, 1, 34, "Stuffed Crust Digiorno", "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "It dries the hairs or else it gets the hose again", 25.0, 2, 123, "Hair-O-Matic 9000", "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                    { 6, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Cool.", 6000.0, 2, 87, "Automated Fidget Spinner", "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Provides +1 to poppable collars", 30.0, 3, 754, "Ralph Lauren Polo", "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                    { 7, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "No Stripes or Polka Dots", 70.0, 3, 7, "Heather Gray Hoodie", "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                    { 4, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Plug in to the Adventure!", 10.0, 4, 5, "Brave Little Toaster", "96b678a8-438c-4c90-9642-cd300c7964fc" },
-                    { 8, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tear down the establishment of mars.", 830.0, 4, 10, "Sledgehammer", "96b678a8-438c-4c90-9642-cd300c7964fc" }
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Banana Daniels", 17.01, 1, 3, "Bananiels", "448873f9-e50e-438e-9d89-7873c3caef86" },
+                    { 5, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "That pizza with the cheese in the crust", 14.0, 1, 34, "Stuffed Crust Digiorno", "448873f9-e50e-438e-9d89-7873c3caef86" },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "It dries the hairs or else it gets the hose again", 25.0, 2, 123, "Hair-O-Matic 9000", "448873f9-e50e-438e-9d89-7873c3caef86" },
+                    { 6, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Cool.", 6000.0, 2, 87, "Automated Fidget Spinner", "448873f9-e50e-438e-9d89-7873c3caef86" },
+                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Provides +1 to poppable collars", 30.0, 3, 754, "Ralph Lauren Polo", "448873f9-e50e-438e-9d89-7873c3caef86" },
+                    { 7, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "No Stripes or Polka Dots", 70.0, 3, 7, "Heather Gray Hoodie", "448873f9-e50e-438e-9d89-7873c3caef86" },
+                    { 4, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Plug in to the Adventure!", 10.0, 4, 5, "Brave Little Toaster", "448873f9-e50e-438e-9d89-7873c3caef86" },
+                    { 8, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tear down the establishment of mars.", 830.0, 4, 10, "Sledgehammer", "448873f9-e50e-438e-9d89-7873c3caef86" }
                 });
 
             migrationBuilder.CreateIndex(
