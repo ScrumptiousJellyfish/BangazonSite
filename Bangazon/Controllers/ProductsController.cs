@@ -61,10 +61,6 @@ namespace Bangazon.Controllers
         [Authorize]
         public async Task<IActionResult> Create()
         {
-            // Remove the user from the model validation because it is
-            // not information posted in the form
-            ModelState.Remove("product.User");
-
             // Get the current user
             var user = await GetCurrentUserAsync();
 
@@ -83,7 +79,6 @@ namespace Bangazon.Controllers
             // not information posted in the form
             ModelState.Remove("User");
             ModelState.Remove("UserId");
-            //ModelState.Remove(product.UserId);
 
 
             if (ModelState.IsValid)
@@ -95,7 +90,8 @@ namespace Bangazon.Controllers
 
                 _context.Add(product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var id = product.ProductId;
+                return RedirectToAction("Details", new { id = product.ProductId});
             }
 
             ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
