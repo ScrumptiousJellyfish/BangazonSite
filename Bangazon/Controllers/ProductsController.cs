@@ -90,7 +90,6 @@ namespace Bangazon.Controllers
 
                 _context.Add(product);
                 await _context.SaveChangesAsync();
-                var id = product.ProductId;
                 return RedirectToAction("Details", new { id = product.ProductId});
             }
 
