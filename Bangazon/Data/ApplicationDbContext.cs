@@ -5,6 +5,7 @@ using Bangazon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Bangazon.Models.OrderViewModels;
 
 namespace Bangazon.Data {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
@@ -139,7 +140,106 @@ namespace Bangazon.Data {
                 }
             );
 
-            
+            modelBuilder.Entity<Order>().HasData(
+               new Order()
+               {
+                   OrderId = 1,
+                   DateCreated = new DateTime(2018, 9, 01),
+                   DateCompleted = new DateTime(2018, 10, 01),
+                   UserId = user.Id,
+                   PaymentTypeId = null
+               },
+               new Order()
+               {
+                   OrderId = 2,
+                   DateCreated = new DateTime(2017, 3, 01),
+                   DateCompleted = new DateTime(2018, 10, 01),
+                   UserId = user2.Id,
+                   PaymentTypeId = 3
+               },
+               new Order()
+               {
+                   OrderId = 3,
+                   DateCreated = new DateTime(2016, 9, 01),
+                   DateCompleted = new DateTime(2017, 10, 01),
+                   UserId = user.Id,
+                   PaymentTypeId = 2
+               },
+               new Order()
+               {
+                   OrderId = 4,
+                   DateCreated = new DateTime(2018, 9, 01),
+                   DateCompleted = null,
+                   UserId = user2.Id,
+                   PaymentTypeId = null
+               },
+               new Order()
+               {
+                   OrderId = 5,
+                   DateCreated = new DateTime(2018, 10, 2),
+                   DateCompleted = null,
+                   UserId = user.Id,
+                   PaymentTypeId = 1
+               }
+           );
+
+            modelBuilder.Entity<OrderProduct>().HasData(
+                new OrderProduct()
+                {
+                    OrderProductId = 1,
+                    OrderId = 1,
+                    ProductId = 1
+                },
+                new OrderProduct()
+                {
+                    OrderProductId = 2,
+                    OrderId = 1,
+                    ProductId = 7
+                },
+                new OrderProduct()
+                {
+                    OrderProductId = 3,
+                    OrderId = 2,
+                    ProductId = 6
+                },
+                new OrderProduct()
+                {
+                    OrderProductId = 4,
+                    OrderId = 2,
+                    ProductId = 4
+                },
+                new OrderProduct()
+                {
+                    OrderProductId = 5,
+                    OrderId = 3,
+                    ProductId = 8
+                },
+                new OrderProduct()
+                {
+                    OrderProductId = 6,
+                    OrderId = 4,
+                    ProductId = 2
+                },
+                new OrderProduct()
+                {
+                    OrderProductId = 7,
+                    OrderId = 5,
+                    ProductId = 3
+                },
+                new OrderProduct()
+                {
+                    OrderProductId = 8,
+                    OrderId = 1,
+                    ProductId = 1
+                },
+                new OrderProduct()
+                {
+                    OrderProductId = 9,
+                    OrderId = 1,
+                    ProductId = 1
+                }
+                );
+
             Product product1 = new Product()
             {
                 ProductId = 1,
@@ -239,5 +339,7 @@ namespace Bangazon.Data {
 
 
         }
+
+        
     }
 }

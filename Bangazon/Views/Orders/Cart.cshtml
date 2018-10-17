@@ -1,0 +1,74 @@
+﻿@model Bangazon.Models.OrderViewModels.OrderDetailViewModel
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h2>Cart</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.DateCreated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Order.DateCreated)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.DateCompleted)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Order.DateCompleted)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.User)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Order.User.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.PaymentType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Order.PaymentType.AccountNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Units
+                </th>
+                <th>
+                    Cost
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.LineItems)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Units)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-action="Edit" asp-route-id="@Model.Order.OrderId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

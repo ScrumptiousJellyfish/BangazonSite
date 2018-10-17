@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Identity;
+using Bangazon.Models.OrderViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -14,11 +16,15 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public OrdersController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public OrdersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         // GET: Orders
         public async Task<IActionResult> Index()
         {
@@ -44,6 +50,37 @@ namespace Bangazon.Controllers
             }
 
             return View(order);
+        }
+
+        // GET: Orders/Cart
+        public async Task<IActionResult> Cart()
+        {
+
+            var user = await GetCurrentUserAsync();
+
+            var order = await _context.Order
+                .Where(o => o.UserId == user.Id)
+                .Where(o => o.PaymentTypeId == null)
+                .Include(o => o.User)
+                .FirstOrDefaultAsync();
+
+            if (order == null)
+            {
+                return View();
+            }
+            var ODVM = new OrderDetailViewModel();
+        
+            var orderProducts = _context.OrderProduct
+                .Where(op => op.OrderId == order.OrderId)
+                .Include(op => op.Product);
+            var productCounts = orderProducts.Select(op => op.Product.Title)
+                                                    .GroupBy(op => op)
+                                                    .ToDictionary(x => x.Key, y => y.Count());
+            ODVM.Order = order;
+            ODVM.LineItems = orderProducts.Select(op => new OrderLineItem() { Product = op.Product, Cost = op.Product.Price * productCounts[op.Product.Title], Units = productCounts[op.Product.Title] });
+            
+
+            return View(ODVM);
         }
 
         // GET: Orders/Create
