@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Bangazon.Models.ProductTypesViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -26,7 +27,6 @@ namespace Bangazon.Controllers
             return View(await _context.ProductType.ToListAsync());
         }
 
-        // GET: ProductTypeList
         public async Task<IActionResult> Types()
         {
             var model = new ProductTypesViewModel();

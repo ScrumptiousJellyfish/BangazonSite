@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bangazon.Models.ProductType>
+﻿@model IEnumerable<Bangazon.Models.ProductTypesViewModels.ProductTypesViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -24,11 +24,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Label)
             </td>
-            <td>
+            @*<td>
                 <a asp-action="Edit" asp-route-id="@item.ProductTypeId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ProductTypeId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ProductTypeId">Delete</a>
-            </td>
+            </td>*@
         </tr>
 }
     </tbody>

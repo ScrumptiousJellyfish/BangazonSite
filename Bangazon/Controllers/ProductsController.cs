@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Bangazon.Models.ProductTypesViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -25,6 +26,8 @@ namespace Bangazon.Controllers
             var applicationDbContext = _context.Product.Include(p => p.ProductType);
             return View(await applicationDbContext.ToListAsync());
         }
+
+
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
