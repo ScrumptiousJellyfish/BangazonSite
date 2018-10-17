@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon.Controllers
 {
@@ -20,6 +21,7 @@ namespace Bangazon.Controllers
         }
 
         // GET: Products
+        [Authorize]
         public async Task<IActionResult> Index(string searchString)
         {
             var products = from m in _context.Product
@@ -27,7 +29,7 @@ namespace Bangazon.Controllers
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                products = products.Where(s => s.Title.Contains(searchString));
+                products = products.Where(s => s.Title.Contains(searchString) || s.Description.Contains(searchString));
             }
 
             return View(await products.ToListAsync());
