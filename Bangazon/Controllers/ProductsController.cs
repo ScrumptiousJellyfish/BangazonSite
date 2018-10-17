@@ -24,14 +24,15 @@ namespace Bangazon.Controllers
         [Authorize]
         public async Task<IActionResult> Index(string searchString)
         {
-            var products = from m in _context.Product
+            var products = from m in _context.Product.Include(p => p.ProductType)
                          select m;
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 products = products.Where(s => s.Title.Contains(searchString) || s.Description.Contains(searchString));
             }
-
+            //var applicationDbContext = _context.Product.Include(p => p.ProductType);
+            //return View(await applicationDbContext.ToListAsync());
             return View(await products.ToListAsync());
         }
 
@@ -74,6 +75,9 @@ namespace Bangazon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductId,DateCreated,Description,Title,Price,Quantity,ProductTypeId")] Product product)
         {
+            ModelState.Remove("User");
+            ModelState.Remove("UserId");
+
             if (ModelState.IsValid)
             {
                 _context.Add(product);
