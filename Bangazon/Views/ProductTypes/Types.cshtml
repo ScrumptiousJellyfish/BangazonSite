@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bangazon.Models.ProductTypesViewModels.ProductTypesViewModel>
+﻿@model Bangazon.Models.ProductTypesViewModels.ProductTypesViewModel
 
 @{
     ViewData["Title"] = "Types";
@@ -11,21 +11,29 @@
    
     
     <tbody>
-        @foreach (var item in Model)
-        {
-            @foreach (var key in item.GroupedProducts)
+        
+            @foreach (var key in Model.GroupedProducts)
             {
 
             <tr>
 
                 <td>
-                    <a asp-action="" asp-route-id="@key.TypeId">@key.TypeName</a>
+                    <a asp-action="Details" asp-route-id="@key.TypeId">@key.TypeName</a>
                 </td>
                 <td>
                     @key.ProductCount
                 </td>
             </tr>
+            <tr>
+                @foreach (var item in key.Products)
+                {
+                    <td>
+                        @item.Title
+                    </td>
+
+                }
+            </tr>
             }
-        }
+        
     </tbody>
 </table>
