@@ -32,10 +32,25 @@ namespace Bangazon.Controllers
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        [Authorize]
+        public async Task<IActionResult> Index(string searchString)
         {
-            var applicationDbContext = _context.Product.Include(p => p.ProductType);
-            return View(await applicationDbContext.ToListAsync());
+            var products = from m in _context.Product.Include(p => p.ProductType)
+                         select m;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.Title.Contains(searchString) || s.Description.Contains(searchString));
+            }
+            //var applicationDbContext = _context.Product.Include(p => p.ProductType);
+            //return View(await applicationDbContext.ToListAsync());
+            return View(await products.ToListAsync());
+        }
+
+        [HttpPost]
+        public string Index(string searchString, bool notUsed)
+        {
+            return "From [HttpPost]Index: filter on " + searchString;
         }
 
         // GET: Products/Details/5
@@ -78,6 +93,7 @@ namespace Bangazon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductId,DateCreated,Description,Title,Price,Quantity,ProductTypeId")] Product product)
         {
+
             // Remove the user from the model validation because it is
             // not information posted in the form
             ModelState.Remove("User");
