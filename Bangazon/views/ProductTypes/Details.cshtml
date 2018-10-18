@@ -1,4 +1,4 @@
-﻿@model Bangazon.Models.ProductType
+﻿@model Bangazon.Models.ProductTypeViewModels.ProductTypeViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,14 +11,21 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Label)
+            @Html.DisplayNameFor(model => model.productType.Label)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Label)
+            @Html.DisplayFor(model => model.productType.Label)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.products)
+        </dt>
+            @foreach(var item in Model.products)
+            {
+                <dd>@item.Title</dd>
+            }   
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ProductTypeId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.productType.ProductTypeId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
