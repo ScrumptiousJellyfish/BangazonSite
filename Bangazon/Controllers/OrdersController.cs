@@ -78,8 +78,7 @@ namespace Bangazon.Controllers
                                                     .ToDictionary(x => x.Key, y => y.Count());
             ODVM.Order = order;
             ODVM.LineItems = orderProducts.Select(op => new OrderLineItem() { Product = op.Product, Cost = op.Product.Price * productCounts[op.Product.Title], Units = productCounts[op.Product.Title] });
-            
-
+            ODVM.LineItems = ODVM.LineItems.GroupBy(p => p.Product.Title).Select(g => g.First()).ToList();
             return View(ODVM);
         }
 
@@ -193,6 +192,16 @@ namespace Bangazon.Controllers
             _context.Order.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteItem(int id)
+        {
+            var orderProduct = await _context.OrderProduct.FindAsync(id);
+            _context.OrderProduct.Remove(orderProduct);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Cart));
         }
 
         private bool OrderExists(int id)

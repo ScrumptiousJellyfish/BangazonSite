@@ -16,24 +16,7 @@
         <dd>
             @Html.DisplayFor(model => model.Order.DateCreated)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.DateCompleted)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.DateCompleted)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.User)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.User.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.PaymentType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.PaymentType.AccountNumber)
-        </dd>
+              
     </dl>
 </div>
 <div>
@@ -55,17 +38,24 @@
         <tbody>
             @foreach (var item in Model.LineItems)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Units)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cost)
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Units)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cost)
+                    </td>
+                </tr>
+                @Html.ActionLink(
+                linkText: "Details",
+                actionName: "Details",
+                controllerName: "Product",
+                routeValues: new {id = item.Id},
+                        htmlAttributes: null
+                    )
             }
         </tbody>
     </table>
