@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Bangazon.Models.ProductTypeViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -26,21 +27,24 @@ namespace Bangazon.Controllers
         }
 
         // GET: ProductTypes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details([FromRoute] int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
+            var model = new ProductTypeViewModel();
             var productType = await _context.ProductType
                 .FirstOrDefaultAsync(m => m.ProductTypeId == id);
             if (productType == null)
             {
                 return NotFound();
             }
-
-            return View(productType);
+            model.products = await (from s in _context.Product
+                                    where s.ProductTypeId == id
+                                    select s).ToListAsync();
+            model.productType = productType;
+            return View(model);
         }
 
         // GET: ProductTypes/Create
