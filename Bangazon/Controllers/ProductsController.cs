@@ -7,22 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Bangazon.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public ProductsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+        public ProductsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Product.Include(p => p.ProductType);
+            var currentUser = await GetCurrentUserAsync();
+            var applicationDbContext = _context.Product.Include(p => p.ProductType)
+                                                       .Where(p => p.UserId == currentUser.Id.ToString());
             return View(await applicationDbContext.ToListAsync());
         }
 
