@@ -10,6 +10,7 @@ using Bangazon.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Bangazon.Models.ProductViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -64,7 +65,9 @@ namespace Bangazon.Controllers
             // Get the current user
             var user = await GetCurrentUserAsync();
 
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            ProductCreateViewModel product = new ProductCreateViewModel();
+            product.Products = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+
             return View();
         }
 
@@ -93,7 +96,9 @@ namespace Bangazon.Controllers
                 return RedirectToAction("Details", new { id = product.ProductId});
             }
 
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
+            ProductCreateViewModel returnModel = new ProductCreateViewModel() {
+                Products = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId)
+            };
             return View(product);
         }
 
