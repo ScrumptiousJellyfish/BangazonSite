@@ -34,9 +34,24 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
+            var orderProduct = new OrderProduct();
+
+            List<int> ListOfProductIds = new List<int>();
+
+            ListOfProductIds.Add(orderProduct.ProductId);
+
+            foreach(var item in ListOfProductIds)
+            {
+                Console.WriteLine(item);
+                IEnumerable<int> currentQuantity = from count in ListOfProductIds
+                                              where count == id
+                                              select count;
+            }
+
             var product = await _context.Product
                 .Include(p => p.ProductType)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
+
             if (product == null)
             {
                 return NotFound();
