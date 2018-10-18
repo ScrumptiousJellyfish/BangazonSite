@@ -1,21 +1,15 @@
 ﻿@model Bangazon.Models.Product
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Product";
 }
 
-<h2>Details</h2>
+<h2>@ViewData["Title"]</h2>
 
 <div>
-    <h4>Product</h4>
+    <h3>@Html.DisplayFor(model => model.Title)</h3>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
@@ -23,22 +17,16 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            Quantity Available
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt>
-            Quantity Available
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ProductType)
