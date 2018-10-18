@@ -5,60 +5,80 @@
 }
 
 <h2>Cart</h2>
+@if (Model.Order != null)
+{
+    <div>
+        <h4>Order</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Order.DateCreated)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Order.DateCreated)
+            </dd>
 
-<div>
-    <h4>Order</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.DateCreated)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.DateCreated)
-        </dd>
-              
-    </dl>
-</div>
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Title
-                </th>
-                <th>
-                    Units
-                </th>
-                <th>
-                    Cost
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.LineItems)
-            {
+        </dl>
+    </div>
+    <div>
+
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Product.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Units)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cost)
-                    </td>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Units
+                    </th>
+                    <th>
+                        Cost
+                    </th>
+                    <th></th>
                 </tr>
-                @Html.ActionLink(
-                linkText: "Details",
-                actionName: "Details",
-                controllerName: "Product",
-                routeValues: new {id = item.Id},
-                        htmlAttributes: null
-                    )
-            }
-        </tbody>
-    </table>
-    <a asp-action="Edit" asp-route-id="@Model.Order.OrderId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model.LineItems)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Units)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cost)
+                        </td>
+                        <td>
+                            @Html.ActionLink(
+                     linkText: "Delete",
+                     actionName: "DeleteItem",
+                     controllerName: "Orders",
+                     routeValues: new { id = item.OrderProductId },
+                     htmlAttributes: null
+                     )
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+        <div>Total: @Model.Total</div>
+        <button class="btn btn-default">
+            @Html.ActionLink(
+         linkText: "Complete Order",
+         actionName: "Complete",
+         controllerName: "Orders",
+         routeValues: new { id = Model.Order.OrderId, Model.Total },
+         htmlAttributes: null
+         )
+        </button>
+
+    </div>
+}
+else
+{
+    <Div> Nothing in Cart </Div>
+}

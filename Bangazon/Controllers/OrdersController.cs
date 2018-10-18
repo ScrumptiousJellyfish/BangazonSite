@@ -64,12 +64,14 @@ namespace Bangazon.Controllers
                 .Include(o => o.User)
                 .FirstOrDefaultAsync();
 
+           
+            var ODVM = new OrderDetailViewModel();
+
             if (order == null)
             {
-                return View();
+                return View(ODVM);
             }
-            var ODVM = new OrderDetailViewModel();
-        
+
             var orderProducts = _context.OrderProduct
                 .Where(op => op.OrderId == order.OrderId)
                 .Include(op => op.Product);
@@ -77,8 +79,14 @@ namespace Bangazon.Controllers
                                                     .GroupBy(op => op)
                                                     .ToDictionary(x => x.Key, y => y.Count());
             ODVM.Order = order;
-            ODVM.LineItems = orderProducts.Select(op => new OrderLineItem() { Product = op.Product, Cost = op.Product.Price * productCounts[op.Product.Title], Units = productCounts[op.Product.Title] });
+            ODVM.LineItems = orderProducts.Select(op => new OrderLineItem() { Product = op.Product, OrderProductId = op.OrderProductId, Cost = op.Product.Price * productCounts[op.Product.Title], Units = productCounts[op.Product.Title] });
             ODVM.LineItems = ODVM.LineItems.GroupBy(p => p.Product.Title).Select(g => g.First()).ToList();
+            double total = 0.0;
+            foreach (var item in ODVM.LineItems)
+            {
+                total += item.Product.Price * item.Units;
+            }
+            ODVM.Total = total;
             return View(ODVM);
         }
 
@@ -194,8 +202,8 @@ namespace Bangazon.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+       
+        
         public async Task<IActionResult> DeleteItem(int id)
         {
             var orderProduct = await _context.OrderProduct.FindAsync(id);
@@ -208,5 +216,50 @@ namespace Bangazon.Controllers
         {
             return _context.Order.Any(e => e.OrderId == id);
         }
+
+
+        // GET: Orders/Complete/5
+        public async Task<IActionResult> Complete(int? id, double? Totes)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var user = await GetCurrentUserAsync();
+            var order = await _context.Order
+                .FirstOrDefaultAsync(m => m.OrderId == id);
+            var paymentTypes = _context.PaymentType
+                .Where(pt => user.Id == pt.UserId)
+                .Select(pt => new SelectListItem() { Value = pt.PaymentTypeId.ToString(), Text = pt.Description}).ToList();
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+            var OCVM = new OrderCompleteViewModel
+            {
+                Order = order,
+                PaymentTypes = paymentTypes
+
+            };
+            OCVM.Total = Totes;
+            return View(OCVM);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Complete(int id, [Bind("OrderId,DateCreated,DateCompleted,UserId,PaymentTypeId")] Order order)
+        {
+            order.DateCompleted = DateTime.Now;
+            _context.Update(order);
+            await _context.SaveChangesAsync();
+                
+            return RedirectToAction(nameof(Cart));
+            
+        }
+
+
     }
 }
