@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Bangazon.Models.ProductViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -34,20 +35,7 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
-            var orderProduct = new OrderProduct();
-
-            List<int> ListOfProductIds = new List<int>();
-
-            ListOfProductIds.Add(orderProduct.ProductId);
-
-            foreach(var item in ListOfProductIds)
-            {
-                Console.WriteLine(item);
-                IEnumerable<int> currentQuantity = from count in ListOfProductIds
-                                              where count == id
-                                              select count;
-            }
-
+            // queries by ProductId and returns all fields for the Product that was clicked
             var product = await _context.Product
                 .Include(p => p.ProductType)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
@@ -57,6 +45,12 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
+            // selects the OrderProducts table and matches the current ProductId with the ProductId in OrderProducts. Gets a distinc count of a ProductId
+            int ordersPlaced = _context.OrderProduct.Where(op => op.ProductId == product.ProductId).Count();
+
+            // Subtracts the original Product Quantity from the total ordersPlaced.
+            product.Quantity -= ordersPlaced;
+           
             return View(product);
         }
 

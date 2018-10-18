@@ -35,7 +35,7 @@
             @Html.DisplayFor(model => model.Price)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
+            Quantity Available
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Quantity)
@@ -47,6 +47,9 @@
             @Html.DisplayFor(model => model.ProductType.Label)
         </dd>
     </dl>
+    <a asp-action="Index" class="btn btn-warning">Add to Order</a>
+
+    <hr />
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a> |
