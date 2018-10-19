@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Bangazon.Controllers
 {
@@ -14,16 +17,39 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context,
+                                  UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
+        // Stores private reference to Identity Framework user manager
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        // This task retrieves the currently authenticated user
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
         // GET: Products
-        public async Task<IActionResult> Index()
+        [Authorize]
+        public async Task<IActionResult> Index(string searchString)
         {
-            var applicationDbContext = _context.Product.Include(p => p.ProductType);
-            return View(await applicationDbContext.ToListAsync());
+            var products = from m in _context.Product.Include(p => p.ProductType)
+                         select m;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.Title.Contains(searchString) || s.Description.Contains(searchString));
+            }
+            //var applicationDbContext = _context.Product.Include(p => p.ProductType);
+            //return View(await applicationDbContext.ToListAsync());
+            return View(await products.ToListAsync());
+        }
+
+        [HttpPost]
+        public string Index(string searchString, bool notUsed)
+        {
+            return "From [HttpPost]Index: filter on " + searchString;
         }
 
         // GET: Products/Details/5
@@ -34,20 +60,33 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
+            // queries by ProductId and returns all fields for the Product that was clicked
             var product = await _context.Product
                 .Include(p => p.ProductType)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
+
             if (product == null)
             {
                 return NotFound();
             }
 
+            // selects the OrderProducts table and matches the current ProductId with the ProductId in OrderProducts. Gets a distinc count of a ProductId
+            int ordersPlaced = _context.OrderProduct.Where(op => op.ProductId == product.ProductId).Count();
+
+            // Subtracts the original Product Quantity from the total ordersPlaced.
+            product.Quantity -= ordersPlaced;
+           
             return View(product);
         }
 
         // GET: Products/Create
-        public IActionResult Create()
+
+        [Authorize]
+        public async Task<IActionResult> Create()
         {
+            // Get the current user
+            var user = await GetCurrentUserAsync();
+
             ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             return View();
         }
@@ -59,12 +98,25 @@ namespace Bangazon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductId,DateCreated,Description,Title,Price,Quantity,ProductTypeId")] Product product)
         {
+
+            // Remove the user from the model validation because it is
+            // not information posted in the form
+            ModelState.Remove("User");
+            ModelState.Remove("UserId");
+
+
             if (ModelState.IsValid)
             {
+                // Get the current user
+                var user = await GetCurrentUserAsync();
+
+                product.UserId = user.Id;
+
                 _context.Add(product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { id = product.ProductId});
             }
+
             ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
             return View(product);
         }
