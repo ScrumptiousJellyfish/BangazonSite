@@ -86,8 +86,9 @@ namespace Bangazon.Controllers
         {
             // Remove the user from the model validation because it is
             // not information posted in the form
-            ModelState.Remove("User");
-            ModelState.Remove("UserId");
+            ModelState.Remove("Product.User");
+            ModelState.Remove("Product.UserId");
+            ModelState.Remove("Product.ProductType");
 
 
             if (ModelState.IsValid)
