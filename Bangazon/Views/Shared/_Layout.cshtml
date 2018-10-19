@@ -33,15 +33,16 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Bangazon</a>
             </div>
 
+
             @inject SignInManager<ApplicationUser> SignInManager
+
             @if (SignInManager.IsSignedIn(User))
             {
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="ProductTypes" asp-action="Index">Product Types</a></li>
+                        <li><a asp-area="" asp-controller="ProductTypes" asp-action="Types">Product Types</a></li>
                         <li><a asp-area="" asp-controller="Products" asp-action="Create">Sell a Product</a></li>
-                        <li><a asp-area="" asp-controller="Products" asp-action="Index">My Products</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">View Cart</a></li>
+                        <li><a asp-area="" asp-controller="Orders" asp-action="Cart">View Cart</a></li>
                     </ul>
                       <form asp-controller="Products" asp-action="Index" method="get">
                         <p>
@@ -62,6 +63,8 @@
                     <partial name="_LoginPartial" />
                 </div>
             }
+
+
 
         </div>
     </nav>
