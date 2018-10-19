@@ -5,6 +5,7 @@ using Bangazon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Bangazon.Models.OrderViewModels;
 
 namespace Bangazon.Data {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
@@ -139,7 +140,6 @@ namespace Bangazon.Data {
                 }
             );
 
-            
             Product product1 = new Product()
             {
                 ProductId = 1,
@@ -239,5 +239,7 @@ namespace Bangazon.Data {
 
 
         }
+
+        
     }
 }
