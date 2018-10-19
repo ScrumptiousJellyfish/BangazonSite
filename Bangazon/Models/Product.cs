@@ -10,6 +10,8 @@ namespace Bangazon.Models
     [Key]
     public int ProductId {get;set;}
 
+    private double _price;
+
     [Required]
     [DataType(DataType.Date)]
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -25,6 +27,7 @@ namespace Bangazon.Models
 
     [Required]
     [DisplayFormat(DataFormatString = "{0:C}")]
+    [Range(1, 10000)]
     public double Price { get; set; }
 
     [Required]

@@ -16,7 +16,6 @@ namespace Bangazon.Data {
         public DbSet<PaymentType> PaymentType { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderProduct> OrderProduct { get; set; }
-
         protected override void OnModelCreating (ModelBuilder modelBuilder) {
             base.OnModelCreating (modelBuilder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
