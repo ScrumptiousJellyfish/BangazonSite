@@ -1,0 +1,36 @@
+﻿@model Bangazon.Models.OrderViewModels.OrderCompleteViewModel
+
+
+@{
+    ViewData["Title"] = "Complete";
+}
+
+<h2>Complete Order</h2>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Complete">
+                                
+            <div class="form-group">
+                <input type="hidden" asp-for="Order.OrderId" />
+                <input type="hidden" asp-for="Order.DateCreated" />
+                <input type="hidden" asp-for="Order.DateCompleted" />
+                <input type="hidden" asp-for="Order.UserId" />
+                <label asp-for="Order.PaymentTypeId" class="control-label"></label>
+                <select asp-for="Order.PaymentTypeId" class="form-control" asp-items="@Model.PaymentTypes"></select>
+                <span asp-validation-for="Order.PaymentTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Purchase" class="btn btn-default" />
+            </div>
+        </form>
+        <div>Total: @Model.Total</div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
