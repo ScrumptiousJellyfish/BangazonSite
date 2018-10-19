@@ -18,12 +18,35 @@ namespace Bangazon.Controllers
         public ProductTypesController(ApplicationDbContext context)
         {
             _context = context;
+
         }
 
         // GET: ProductTypes
         public async Task<IActionResult> Index()
         {
             return View(await _context.ProductType.ToListAsync());
+        }
+
+        public async Task<IActionResult> Types()
+        {
+            var model = new ProductTypeViewModel();
+
+            // Build list of Product instances for display in view
+            // LINQ is awesome
+            model.GroupedProducts = await (
+                from t in _context.ProductType
+                join p in _context.Product
+                on t.ProductTypeId equals p.ProductTypeId
+                group new { t, p } by new { t.ProductTypeId, t.Label } into grouped
+                select new GroupedProducts
+                {
+                    TypeId = grouped.Key.ProductTypeId,
+                    TypeName = grouped.Key.Label,
+                    ProductCount = grouped.Select(x => x.p.ProductId).Count(),
+                    Products = grouped.Select(x => x.p).Take(3)
+                }).ToListAsync();
+
+            return View(model);
         }
 
         // GET: ProductTypes/Details/5

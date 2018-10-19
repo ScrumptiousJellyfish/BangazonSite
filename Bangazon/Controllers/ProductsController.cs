@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Bangazon.Models.ProductTypeViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+
 
 namespace Bangazon.Controllers
 {
@@ -51,6 +53,8 @@ namespace Bangazon.Controllers
         {
             return "From [HttpPost]Index: filter on " + searchString;
         }
+
+
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)

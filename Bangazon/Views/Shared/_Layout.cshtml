@@ -35,6 +35,7 @@
 
 
             @inject SignInManager<ApplicationUser> SignInManager
+
             @if (SignInManager.IsSignedIn(User))
             {
                 <div class="navbar-collapse collapse">
