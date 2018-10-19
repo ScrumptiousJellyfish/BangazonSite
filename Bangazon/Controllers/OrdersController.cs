@@ -178,11 +178,13 @@ namespace Bangazon.Controllers
             {
                 return NotFound();
             }
-
+            
             var order = await _context.Order
                 .Include(o => o.PaymentType)
                 .Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
+
+           
             if (order == null)
             {
                 return NotFound();
@@ -197,9 +199,16 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var order = await _context.Order.FindAsync(id);
+            var orderProducts = _context.OrderProduct
+               .Where(op => op.OrderId == order.OrderId);
+            foreach (var OP in orderProducts)
+            {
+                _context.OrderProduct.Remove(OP);
+            }
+            await _context.SaveChangesAsync();
             _context.Order.Remove(order);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Cart));
         }
 
        

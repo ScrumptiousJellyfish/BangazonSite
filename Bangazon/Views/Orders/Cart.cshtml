@@ -75,6 +75,15 @@
          htmlAttributes: null
          )
         </button>
+        <button class="btn btn-default">
+            @Html.ActionLink(
+         linkText: "Cancel Order",
+         actionName: "Delete",
+         controllerName: "Orders",
+         routeValues: new { id = Model.Order.OrderId},
+         htmlAttributes: null
+         )
+        </button>
 
     </div>
 }
