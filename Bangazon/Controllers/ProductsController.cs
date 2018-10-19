@@ -46,14 +46,22 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
+            // queries by ProductId and returns all fields for the Product that was clicked
             var product = await _context.Product
                 .Include(p => p.ProductType)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
+
             if (product == null)
             {
                 return NotFound();
             }
 
+            // selects the OrderProducts table and matches the current ProductId with the ProductId in OrderProducts. Gets a distinc count of a ProductId
+            int ordersPlaced = _context.OrderProduct.Where(op => op.ProductId == product.ProductId).Count();
+
+            // Subtracts the original Product Quantity from the total ordersPlaced.
+            product.Quantity -= ordersPlaced;
+           
             return View(product);
         }
 
