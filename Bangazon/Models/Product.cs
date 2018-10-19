@@ -38,11 +38,12 @@ namespace Bangazon.Models
     [Required]
     public string UserId { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Please select a Product Category")]
+    [Range(1, double.MaxValue, ErrorMessage = "Please select a Product Category")]
     [Display(Name="Product Category")]
     public int ProductTypeId { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Please select a Product Category")]
     public ProductType ProductType { get; set; }
 
     public virtual ICollection<OrderProduct> OrderProducts { get; set; }

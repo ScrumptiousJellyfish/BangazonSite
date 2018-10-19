@@ -17,7 +17,7 @@ namespace Bangazon.Models.ProductViewModels
     {
         public Product Product { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "- Select item -")]
         [Display(Name = "Product Type")]
         public List<SelectListItem> ProductTypes { get; }
 
